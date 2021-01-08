@@ -13,7 +13,20 @@ test_latlong = test_latitude + "," + test_longitude
 mode = "bicycling"
 
 request = requests.get(
-   request_base + "origin=place_id:" + uoft_place_id + "&destination=" + test_latlong + "&mode=" + mode + "&key=" + api_key)
+    request_base + "origin=place_id:" + uoft_place_id + "&destination=" + test_latlong + "&mode=" + mode + "&key=" + api_key)
 seconds = request.json()["routes"][0]["legs"][0]["duration"]["value"]
-minutes = seconds/60
+minutes = seconds / 60
 print(f'This trip will take {minutes} minutes when {mode}.')
+# print(request.json())
+a = request.json()
+for k, v in a.items():
+    print(k, v)
+
+
+def get_duration(route) -> int:
+    """Get duration of this route"""
+    return route["legs"][0]["duration"]["value"]
+
+
+m = min(get_duration(route) for route in a["routes"] if get_duration(route) >= 0)
+print(m)
