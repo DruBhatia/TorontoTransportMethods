@@ -13,6 +13,7 @@ print(type(census_tracts))
 print(census_tracts_toronto.head())
 converted_map_toronto = census_tracts_toronto.to_crs("EPSG:4326")
 map_toronto_4326 = converted_map_toronto.plot()
+plt.savefig('greater_toronto.png', dpi=800)
 plt.show()
 print(converted_map_toronto.head())
 converted_map_toronto.to_csv(
