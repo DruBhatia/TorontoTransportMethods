@@ -22,12 +22,32 @@ converted_map_toronto.to_csv(
 print(gpd.GeoSeries(converted_map_toronto.centroid))
 centroids = converted_map_toronto.centroid
 centroids.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/toronto_centroids.csv")
+
+# with open("toronto_centroids.csv") as csv_file:
+#     csv_reader = csv.reader(csv_file)
+#     line_count = 0
+#     for row in csv_reader:
+#         if line_count == 0:
+#             print(f'Column names are {", ".join(row)}')
+#             line_count += 1
+#         else:
+#             print(f'Census tract {row[0]} has centroid of coordinates {row[1]}')
+
 with open("toronto_centroids.csv") as csv_file:
     csv_reader = csv.reader(csv_file)
     line_count = 0
-    for row in csv_reader:
-        if line_count == 0:
-            print(f'Column names are {", ".join(row)}')
-            line_count += 1
-        else:
-            print(f'Census tract {row[0]} has centroid of coordinates {row[1]}')
+    with open('formatted_centroids.csv', 'w', newline='') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(['TRACTID', 'LONGITUDE', 'LATITUDE'])
+        for row in csv_reader:
+            if line_count == 0:
+                line_count += 1
+            else:
+                tract_id = row[0]
+                coordinate = row[1][6:].strip("()")
+                latlong = coordinate.split(" ")
+                longitude = latlong[0]
+                latitude = latlong[1]
+                manipulated_row = tract_id, longitude, latitude
+                writer.writerow(manipulated_row)
+
