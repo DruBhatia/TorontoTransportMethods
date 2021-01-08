@@ -2,7 +2,6 @@ import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import csv
-# import pysal as psal
 
 
 census_2016 = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/Geographical Data/lct_000b16a_e.shp"
@@ -48,6 +47,6 @@ with open("toronto_centroids.csv") as csv_file:
                 latlong = coordinate.split(" ")
                 longitude = latlong[0]
                 latitude = latlong[1]
-                manipulated_row = tract_id, longitude, latitude
-                writer.writerow(manipulated_row)
+                stripped_row = tract_id, longitude, latitude
+                writer.writerow(stripped_row)
 
