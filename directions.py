@@ -126,11 +126,10 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
 record_durations(uoft_place_id, "sample_centroids.csv", "sample_durations.csv")
 
 # TODO: verify travel times of remaining entries in sample_durations.csv (4 complete)
-# TODO: make new python file for visualizer
 # TODO: test dataframe merge and map visualizer with sample dataframe before applying to full dataset
 # TODO: remember to record distinction between Toronto metropolitan area and core city when producing the map, either
 #  by cropping the map image or feeding the code a modified input file containing the relevant subset of census tracts
 # TODO: adjust order of longitude, latitude to latitude, longitude in centroid and duration .csv files
 # TODO: add 12 mins of driving time to get_driving as adjustment for having to find parking and walking to destination
-# TODO: add comments to Directions.py inline with code to explain complex chunks
-# TODO: extract code in DataFormatter.py to form proper methods and functions with documentation and inline comments
+# TODO: add comments to directions.py inline with code to explain complex chunks
+# TODO: extract code in data_formatter.py to form proper methods and functions with documentation and inline comments
