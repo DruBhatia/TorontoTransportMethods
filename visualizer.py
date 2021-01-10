@@ -19,11 +19,23 @@ print(durations.head())
 merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
 merged = merged[["TRACTID", "geometry", "LONGITUDE", "LATITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
-merged["SHORTEST"].fillna(value="NA", inplace=True)
-# merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/sample_merged.csv")
+merged["SHORTEST"].fillna(value="4", inplace=True)
+merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/sample_merged.csv")
 
-keys = ["0", "1", "2", "3"]
-colours = ["green", "teal", "gold", "crimson"]
+keys = ["0", "1", "2", "3", "4"]
+colours = ["green", "teal", "gold", "crimson", "grey"]
 colour_dict = dict(zip(keys, colours))
-colour_dict["NA"] = "grey"
 
+row_count = 4
+ax_list = []
+for i in range(row_count+1):
+    ax_list.append('ax' + str(i+1))
+    ax_string = ', '.join(ax_list)
+fig, (ax_string) = plt.subplots(row_count, 4)
+ax1 = plt.subplot2grid((row_count, 4), (0, 1), rowspan=row_count, colspan=3)
+c = 0
+for index, row in merged.iterrows():
+    plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
+    ax1.axis("off")
+    ax1.set_title("Quickest method around the city from UofT")
+fig.savefig("coloured_map.png", dpi=800)
