@@ -32,10 +32,10 @@ for i in range(row_count+1):
     ax_list.append('ax' + str(i+1))
     ax_string = ', '.join(ax_list)
 fig, (ax_string) = plt.subplots(row_count, 4)
-ax1 = plt.subplot2grid((row_count, 4), (0, 1), rowspan=row_count, colspan=3)
+ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
 c = 0
 for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
-    ax1.set_title("Quickest method around the city from UofT")
-fig.savefig("coloured_map.png", dpi=800)
+    ax1.set_title("Quickest method around Greater Toronto from UofT")
+fig.savefig("sample_coloured_map3.png", dpi=1200)
