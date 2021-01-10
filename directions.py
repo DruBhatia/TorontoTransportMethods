@@ -57,7 +57,7 @@ def get_biking(origin: str, destination: str) -> int:
     if json_output["status"] == "ZERO_RESULTS":
         return -1
     else:
-        return get_shortest_duration(json_output)
+        return get_shortest_duration(json_output) + 90
 
 
 def get_transit(origin: str, destination: str) -> int:
@@ -81,7 +81,7 @@ def get_driving(origin: str, destination: str) -> int:
     if json_output["status"] == "ZERO_RESULTS":
         return -1
     else:
-        return get_shortest_duration(json_output)
+        return get_shortest_duration(json_output) + 720
 
 
 def all_transport_modes(origin: str, destination: str) -> list:
@@ -123,13 +123,12 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
                     csv_writer.writerow(full_row)
 
 
-record_durations(uoft_place_id, "sample_centroids.csv", "sample_durations.csv")
+# record_durations(uoft_place_id, "sample_centroids.csv", "sample_durations.csv")
 
-# TODO: verify travel times of remaining entries in sample_durations.csv (4 complete)
-# TODO: test dataframe merge and map visualizer with sample dataframe before applying to full dataset
+# TODO: edit -1 return for non-existent routes to 48h (172,800 seconds) as there is no route or method of transport
+#  that takes that long within the city
 # TODO: remember to record distinction between Toronto metropolitan area and core city when producing the map, either
 #  by cropping the map image or feeding the code a modified input file containing the relevant subset of census tracts
-# TODO: adjust order of longitude, latitude to latitude, longitude in centroid and duration .csv files
-# TODO: add 12 mins of driving time to get_driving as adjustment for having to find parking and walking to destination
+# TODO: adjust order of (longitude, latitude) columns to (latitude, longitude) in centroid and duration .csv files
 # TODO: add comments to directions.py inline with code to explain complex chunks
 # TODO: extract code in data_formatter.py to form proper methods and functions with documentation and inline comments
