@@ -43,7 +43,7 @@ def get_walking(origin: str, destination: str) -> int:
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
     json_output = request.json()
     if json_output["status"] == "ZERO_RESULTS":
-        return -1
+        return 200000
     else:
         return get_shortest_duration(json_output)
 
@@ -55,7 +55,7 @@ def get_biking(origin: str, destination: str) -> int:
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
     json_output = request.json()
     if json_output["status"] == "ZERO_RESULTS":
-        return -1
+        return 200000
     else:
         return get_shortest_duration(json_output) + 90
 
@@ -67,7 +67,7 @@ def get_transit(origin: str, destination: str) -> int:
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
     json_output = request.json()
     if json_output["status"] == "ZERO_RESULTS":
-        return -1
+        return 200000
     else:
         return get_shortest_duration(json_output)
 
@@ -79,7 +79,7 @@ def get_driving(origin: str, destination: str) -> int:
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
     json_output = request.json()
     if json_output["status"] == "ZERO_RESULTS":
-        return -1
+        return 200000
     else:
         return get_shortest_duration(json_output) + 720
 
@@ -105,7 +105,7 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
         line_count = 0
         with open(output_file, 'w', newline='') as csv_out:
             csv_writer = csv.writer(csv_out)
-            csv_writer.writerow(['TRACTID', 'LONGITUDE', 'LATITUDE', 'WALK', 'BIKE', 'TRANSIT', 'DRIVE', 'SHORTEST'])
+            csv_writer.writerow(['TRACTID', 'LATITUDE', 'LONGITUDE', 'WALK', 'BIKE', 'TRANSIT', 'DRIVE', 'SHORTEST'])
             for row in csv_reader:
                 if line_count == 0:
                     line_count += 1
@@ -119,16 +119,15 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
                     for i in range(0, len(durations)):
                         if min(durations) == durations[i]:
                             shortest = i
-                    full_row = tract_id, long, lat, walk, bike, transit, drive, shortest
+                    full_row = tract_id, lat, long, walk, bike, transit, drive, shortest
                     csv_writer.writerow(full_row)
 
 
-# record_durations(uoft_place_id, "sample_centroids.csv", "sample_durations.csv")
+record_durations(uoft_place_id, "formatted_centroids3.csv", "formatted_durations3.csv")
 
-# TODO: edit -1 return for non-existent routes to 48h (172,800 seconds) as there is no route or method of transport
-#  that takes that long within the city
 # TODO: remember to record distinction between Toronto metropolitan area and core city when producing the map, either
 #  by cropping the map image or feeding the code a modified input file containing the relevant subset of census tracts
 # TODO: adjust order of (longitude, latitude) columns to (latitude, longitude) in centroid and duration .csv files
 # TODO: add comments to directions.py inline with code to explain complex chunks
-# TODO: extract code in data_formatter.py to form proper methods and functions with documentation and inline comments
+# TODO: extract code in data_formatter.py  and visualizer.py to form proper methods and functions with documentation
+#  and inline comments
