@@ -26,18 +26,18 @@ base_url = "https://maps.googleapis.com/maps/api/directions/json?"
 
 
 def get_duration(route) -> int:
-    """Get duration of this route."""
+    """ Get duration of this route. """
     return route["legs"][0]["duration"]["value"]
 
 
 def get_shortest_duration(json_output) -> int:
-    """Get the duration of the shortest route from json_output"""
+    """ Get the duration of the shortest route from json_output. """
     duration = min(get_duration(route) for route in json_output["routes"] if get_duration(route) >= 0)
     return duration
 
 
 def get_walking(origin: str, destination: str) -> int:
-    """Get duration of shortest walking route between origin and destination (if it exists)."""
+    """ Get duration of shortest walking route between origin and destination (if it exists). """
     mode = "walking"
     request = requests.get(
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
@@ -49,7 +49,7 @@ def get_walking(origin: str, destination: str) -> int:
 
 
 def get_biking(origin: str, destination: str) -> int:
-    """Get duration of shortest bicycling route between origin and destination (if it exists)."""
+    """ Get duration of shortest bicycling route between origin and destination (if it exists). """
     mode = "bicycling"
     request = requests.get(
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
@@ -61,7 +61,7 @@ def get_biking(origin: str, destination: str) -> int:
 
 
 def get_transit(origin: str, destination: str) -> int:
-    """Get duration of shortest transit route between origin and destination (if it exists)."""
+    """ Get duration of shortest transit route between origin and destination (if it exists). """
     mode = "transit"
     request = requests.get(
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
@@ -73,7 +73,7 @@ def get_transit(origin: str, destination: str) -> int:
 
 
 def get_driving(origin: str, destination: str) -> int:
-    """Get duration of shortest driving route between origin and destination (if it exists)."""
+    """ Get duration of shortest driving route between origin and destination (if it exists). """
     mode = "driving"
     request = requests.get(
         base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
@@ -85,8 +85,8 @@ def get_driving(origin: str, destination: str) -> int:
 
 
 def all_transport_modes(origin: str, destination: str) -> list:
-    """Get the duration of the shortest trip between origin and destination
-    using each mode of transport: walking, biking, transit, driving."""
+    """ Get the duration of the shortest trip between origin and destination
+    using each mode of transport: walking, biking, transit, driving. """
     durations = [
         get_walking(origin, destination),
         get_biking(origin, destination),
@@ -97,9 +97,9 @@ def all_transport_modes(origin: str, destination: str) -> list:
 
 
 def record_durations(origin: str, input_file: str, output_file: str) -> None:
-    """Record the durations of the shortest trips using each mode of transport from origin to the destinations
+    """ Record the durations of the shortest trips using each mode of transport from origin to the destinations
     stored in the rows of the input_file by writing the durations corresponding to each destination into the
-    output file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES."""
+    output file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
     with open(input_file) as csv_in:
         csv_reader = csv.reader(csv_in)
         line_count = 0
@@ -125,9 +125,7 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
 
 record_durations(uoft_place_id, "formatted_centroids3.csv", "formatted_durations3.csv")
 
-# TODO: remember to record distinction between Toronto metropolitan area and core city when producing the map, either
-#  by cropping the map image or feeding the code a modified input file containing the relevant subset of census tracts
-# TODO: adjust order of (longitude, latitude) columns to (latitude, longitude) in centroid and duration .csv files
+# TODO: make new duration .csv subfiles to record route requests for remaining origin nodes
 # TODO: add comments to directions.py inline with code to explain complex chunks
-# TODO: extract code in data_formatter.py  and visualizer.py to form proper methods and functions with documentation
-#  and inline comments
+# TODO: extract code in data_formatter.py  and visualizer.py to form proper methods and functions with meaningful
+#  documentation and inline comments

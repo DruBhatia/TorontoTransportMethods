@@ -1,8 +1,6 @@
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import csv
 
 census_2016 = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
@@ -32,7 +30,7 @@ for i in range(row_count+1):
     ax_string = ', '.join(ax_list)
 fig, (ax_string) = plt.subplots(row_count, 4)
 ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
-c = 0
+
 for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
