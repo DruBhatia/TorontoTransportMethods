@@ -126,6 +126,14 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
 record_durations(uoft_place_id, "formatted_centroids3.csv", "formatted_durations3.csv")
 
 # TODO: make new duration .csv subfiles to record route requests for remaining origin nodes
+# TODO: crop and manually edit the Greater Toronto maps in MS Paint to produce the Core Toronto maps
+# TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
+#  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
+# TODO: add custom legend (NOT using geopandas or matplotlib) for informative use and overall completeness
+# TODO: schedule appointment with Professor Hall once all 6 maps and legend is ready, outline checklist is fully
+#  crossed out, email to Accounts Officer is prepared, and paperwork is filled out
 # TODO: add comments to directions.py inline with code to explain complex chunks
-# TODO: extract code in data_formatter.py  and visualizer.py to form proper methods and functions with meaningful
+# TODO: extract code in data_formatter.py and visualizer.py to form proper methods and functions with meaningful
 #  documentation and inline comments
+# TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
+#  contemporary map in future
