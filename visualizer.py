@@ -12,18 +12,17 @@ converted_map_toronto = census_tracts_toronto.to_crs("EPSG:4326")
 map_toronto_4326 = converted_map_toronto.plot()
 plt.savefig('greater_toronto2.png', dpi=800)
 plt.show()
-print(converted_map_toronto.head())
 
-durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/sample_durations.csv")
+durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/formatted_durations.csv")
 print(durations.head())
 merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
-merged = merged[["TRACTID", "geometry", "LONGITUDE", "LATITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
+merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
-merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/sample_merged.csv")
+merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/master_merged.csv")
 
 keys = ["0", "1", "2", "3", "4"]
-colours = ["green", "teal", "gold", "crimson", "grey"]
+colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
 colour_dict = dict(zip(keys, colours))
 
 row_count = 4
@@ -38,4 +37,4 @@ for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
     ax1.set_title("Quickest method around Greater Toronto from UofT")
-fig.savefig("sample_coloured_map3.png", dpi=1200)
+fig.savefig("uoft_greater_coloured.png", dpi=1600)
