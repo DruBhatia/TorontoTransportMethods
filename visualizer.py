@@ -1,3 +1,4 @@
+import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import csv
@@ -48,28 +49,28 @@ map_core_toronto_4326 = converted_map_core_toronto.plot()
 plt.savefig("core_toronto.png", dpi=800)
 plt.show()
 
-# durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/formatted_durations.csv")
-# print(durations.head())
-# merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
-# merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
-# print(merged.head())
-# merged["SHORTEST"].fillna(value="4", inplace=True)
-# merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/master_merged.csv")
-#
-# keys = ["0", "1", "2", "3", "4"]
-# colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
-# colour_dict = dict(zip(keys, colours))
-#
-# row_count = 4
-# ax_list = []
-# for i in range(row_count+1):
-#     ax_list.append('ax' + str(i+1))
-#     ax_string = ', '.join(ax_list)
-# fig, (ax_string) = plt.subplots(row_count, 4)
-# ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
-#
-# for index, row in merged.iterrows():
-#     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
-#     ax1.axis("off")
-#     ax1.set_title("Quickest method around Greater Toronto from UofT")
-# fig.savefig("uoft_greater_coloured.png", dpi=1600)
+durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/formatted_durations_uoft0.csv")
+print(durations.head())
+merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
+merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
+print(merged.head())
+merged["SHORTEST"].fillna(value="4", inplace=True)
+merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/master_merged2.csv")
+
+keys = ["0", "1", "2", "3", "4"]
+colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
+colour_dict = dict(zip(keys, colours))
+
+row_count = 4
+ax_list = []
+for i in range(row_count+1):
+    ax_list.append('ax' + str(i+1))
+    ax_string = ', '.join(ax_list)
+fig, (ax_string) = plt.subplots(row_count, 4)
+ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
+
+for index, row in merged.iterrows():
+    plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
+    ax1.axis("off")
+    ax1.set_title("Quickest method around City of Toronto from UofT")
+fig.savefig("uoft_core_coloured.png", dpi=1600)
