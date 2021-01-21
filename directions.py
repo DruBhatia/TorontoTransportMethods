@@ -145,7 +145,7 @@ record_durations(pearson_airport_place_id, "formatted_centroids3.csv", "formatte
 print("Phase 3 complete...")
 # Repeat this above chunk for each of the origin nodes selected, and move on to map visualization.
 
-
+# TODO: recompile master_merged_location.csv files since some of them contain conflicting or misplaced data
 # TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
 #  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
 # TODO: add custom legend (NOT using geopandas or matplotlib) for informative use and overall completeness

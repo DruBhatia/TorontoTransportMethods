@@ -49,13 +49,13 @@ map_core_toronto_4326 = converted_map_core_toronto.plot()
 plt.savefig("core_toronto.png", dpi=800)
 plt.show()
 
-durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/formatted_durations_pearson.csv")
+durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/formatted_durations_uoft0.csv")
 print(durations.head())
-merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
+merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
 merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
-merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/master_merged_unionst1.csv")
+merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/master_merged_uoft1.csv")
 
 keys = ["0", "1", "2", "3", "4"]
 colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
@@ -73,4 +73,4 @@ for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
     ax1.set_title("Quickest method around City of Toronto from Pearson Airport")
-fig.savefig("pearson_core_coloured.png", dpi=1600)
+fig.savefig("uoft_greater_coloured.png", dpi=1600)
