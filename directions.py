@@ -96,6 +96,13 @@ def all_transport_modes(origin: str, destination: str) -> list:
     return durations
 
 
+def define_durations_header(input_file: str) -> None:
+    """Define header for input_file, a .csv file designated for recording output from the record_durations method"""
+    with open(input_file, 'w', newline='') as csv_out:
+        csv_writer = csv.writer(csv_out)
+        csv_writer.writerow(['TRACTID', 'LATITUDE', 'LONGITUDE', 'WALK', 'BIKE', 'TRANSIT', 'DRIVE', 'SHORTEST'])
+
+
 def record_durations(origin: str, input_file: str, output_file: str) -> None:
     """ Record the durations of the shortest trips using each mode of transport from origin to the destinations
     stored in the rows of the input_file by writing the durations corresponding to each destination into the
@@ -103,9 +110,8 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
     with open(input_file) as csv_in:
         csv_reader = csv.reader(csv_in)
         line_count = 0
-        with open(output_file, 'w', newline='') as csv_out:
+        with open(output_file, 'a', newline='') as csv_out:
             csv_writer = csv.writer(csv_out)
-            csv_writer.writerow(['TRACTID', 'LATITUDE', 'LONGITUDE', 'WALK', 'BIKE', 'TRANSIT', 'DRIVE', 'SHORTEST'])
             for row in csv_reader:
                 if line_count == 0:
                     line_count += 1
@@ -122,25 +128,24 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
                     full_row = tract_id, lat, long, walk, bike, transit, drive, shortest
                     csv_writer.writerow(full_row)
 
+
 # Current recording of requests:
 # record_durations(uoft_place_id, "formatted_centroids3.csv", "formatted_durations3.csv")
 
 # What recording of requests should look like: define the header for the formatted_durations_location.csv output file,
 # then read the 3 equally sized centroid subfiles one by one, perform the requests, and append all the request results
 # into the same output file which we just defined the header for.
-# define_header("formatted_durations_uoft.csv")
-# record_durations(uoft_place_id, "formatted_centroids1.csv", "formatted_durations_uoft.csv")
-# record_durations(uoft_place_id, "formatted_centroids2.csv", "formatted_durations_uoft.csv")
-# record_durations(uoft_place_id, "formatted_centroids3.csv", "formatted_durations_uoft.csv")
+# define_durations_header("formatted_durations_uoft.csv")
+# record_durations(uoft_place_id, "sample_centroids.csv", "formatted_durations_sample.csv")
+record_durations(pearson_airport_place_id, "formatted_centroids1.csv", "formatted_durations_pearson.csv")
+print("Phase 1 complete...")
+record_durations(pearson_airport_place_id, "formatted_centroids2.csv", "formatted_durations_pearson.csv")
+print("Phase 2 complete...")
+record_durations(pearson_airport_place_id, "formatted_centroids3.csv", "formatted_durations_pearson.csv")
+print("Phase 3 complete...")
 # Repeat this above chunk for each of the origin nodes selected, and move on to map visualization.
 
 
-# TODO: make new duration .csv files to record route requests for remaining origin nodes
-# TODO: reorganize formatted_centroids.csv subfiles to be of ~400 entries each for symmetry, instead of current 300-450
-# TODO: Extract code for header definition from record_durations and modify method to append to a file instead of
-#   overwriting it, so that there is no need to read from and write to 3 different subfiles and collate them,
-#   but rather read from the 3 subfiles and write to the same output file in steps. Read # comments for more details.
-# TODO: crop and manually edit the Greater Toronto maps in MS Paint to produce the Core Toronto maps
 # TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
 #  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
 # TODO: add custom legend (NOT using geopandas or matplotlib) for informative use and overall completeness
