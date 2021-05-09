@@ -133,12 +133,46 @@ def request_durations(origin: str, input_file: str, output_file: str) -> None:
 def record_durations(origin: str, input_files: list, output_file: str) -> None:
     """ Container method which uses helper function request_durations() above to record the durations of shortest trips
      using each mode of transport from origin to destinations stored in input_files and appends the calculated durations
-     into the output_file. """
+     into the output_file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
     define_durations_header(output_file)
     for input_file in input_files:
         request_durations(origin, input_file, output_file)
         print("Data chunk processed...")
     print("Durations formatted and recorded.")
+
+
+def calculate_shares(input_file: str, output_file: str) -> None:
+    """ Calculates the share of the city's total census tracts that are best reached by each mode of transport, using
+    data available in the input_file. Results are written in a basic table format to the output_file.
+    BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
+    with open(input_file) as csv_in:
+        csv_reader = csv.reader(csv_in)
+        line_count = 0
+        walking = 0
+        biking = 0
+        transit = 0
+        driving = 0
+        total = 0
+        with open(output_file, 'w', newline='') as csv_out:
+            csv_writer = csv.writer(csv_out)
+            for row in csv_reader:
+                if line_count == 0:
+                    line_count += 1
+                else:
+                    if row[7] == "0":
+                        walking += 1
+                    elif row[7] == "1":
+                        biking += 1
+                    elif row[7] == "2":
+                        transit += 1
+                    elif row[7] == "3":
+                        driving += 1
+                    total += 1
+            csv_writer.writerow(['MODE', 'TRACTS', 'SHARE'])
+            csv_writer.writerow(['WALKING', walking, (walking/total)*100])
+            csv_writer.writerow(['BIKING', biking, (biking/total)*100])
+            csv_writer.writerow(['TRANSIT', transit, (transit/total)*100])
+            csv_writer.writerow(['DRIVING', driving, (driving/total)*100])
 
 
 # What recording of requests should look like: define the header for the formatted_durations_location.csv output file,
@@ -160,7 +194,7 @@ record_durations(pearson_airport_place_id, ["Formatted Data/formatted_centroids1
 record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.csv",
                                           "Formatted Data/formatted_centroids2.csv",
                                           "Formatted Data/formatted_centroids3.csv"],
-                 "Formatted Data/formatted_durations_union.csv")
+                 "Formatted Data/formatted_durations_unionst.csv")
 
 # Once the above 3 commands are complete and all data chunks have been processed, move on to map visualization,
 # done in visualizer.py
