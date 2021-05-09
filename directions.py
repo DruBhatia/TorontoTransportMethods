@@ -1,5 +1,4 @@
 import requests
-import json
 import csv
 
 uoft_place_id = "ChIJm_0x87g0K4gR93ZadrabHY0"
@@ -7,6 +6,7 @@ union_station_place_id = "ChIJKQDzOA41K4gRajQDdyzD990"
 pearson_airport_place_id = "ChIJkdQtwEo5K4gRxQ4DxOldHbQ"
 api_key = "AIzaSyA06s0IARgjGwG2kv6KpRjlQGyrBOdUgCM"
 base_url = "https://maps.googleapis.com/maps/api/directions/json?"
+
 
 # test_longitude = "-79.4272866628539"
 # test_latitude = "43.8781931250116"
@@ -92,7 +92,7 @@ def all_transport_modes(origin: str, destination: str) -> list:
         get_biking(origin, destination),
         get_transit(origin, destination),
         get_driving(origin, destination),
-        ]
+    ]
     return durations
 
 
@@ -103,10 +103,11 @@ def define_durations_header(input_file: str) -> None:
         csv_writer.writerow(['TRACTID', 'LATITUDE', 'LONGITUDE', 'WALK', 'BIKE', 'TRANSIT', 'DRIVE', 'SHORTEST'])
 
 
-def record_durations(origin: str, input_file: str, output_file: str) -> None:
-    """ Record the durations of the shortest trips using each mode of transport from origin to the destinations
-    stored in the rows of the input_file by writing the durations corresponding to each destination into the
-    output file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
+def request_durations(origin: str, input_file: str, output_file: str) -> None:
+    """ Request and record the durations of the shortest trips using each mode of transport from origin to the
+    destinations stored in the rows of the input_file by writing the durations corresponding to each destination
+    into the output file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. Helper method to
+     record_durations() below. """
     with open(input_file) as csv_in:
         csv_reader = csv.reader(csv_in)
         line_count = 0
@@ -129,28 +130,41 @@ def record_durations(origin: str, input_file: str, output_file: str) -> None:
                     csv_writer.writerow(full_row)
 
 
-# Current recording of requests:
-# record_durations(uoft_place_id, "formatted_centroids3.csv", "formatted_durations3.csv")
+def record_durations(origin: str, input_files: list, output_file: str) -> None:
+    """ Container method which uses helper function request_durations() above to record the durations of shortest trips
+     using each mode of transport from origin to destinations stored in input_files and appends the calculated durations
+     into the output_file. """
+    define_durations_header(output_file)
+    for input_file in input_files:
+        request_durations(origin, input_file, output_file)
+        print("Data chunk processed...")
+    print("Durations formatted and recorded.")
+
 
 # What recording of requests should look like: define the header for the formatted_durations_location.csv output file,
 # then read the 3 equally sized centroid subfiles one by one, perform the requests, and append all the request results
 # into the same output file which we just defined the header for.
-# define_durations_header("formatted_durations_uoft.csv")
-# record_durations(uoft_place_id, "sample_centroids.csv", "formatted_durations_sample.csv")
-record_durations(pearson_airport_place_id, "formatted_centroids1.csv", "formatted_durations_pearson.csv")
-print("Phase 1 complete...")
-record_durations(pearson_airport_place_id, "formatted_centroids2.csv", "formatted_durations_pearson.csv")
-print("Phase 2 complete...")
-record_durations(pearson_airport_place_id, "formatted_centroids3.csv", "formatted_durations_pearson.csv")
-print("Phase 3 complete...")
-# Repeat this above chunk for each of the origin nodes selected, and move on to map visualization.
+
+# The 3 commands below are separated to represent the requests made for each origin node:
+# (UofT, Pearson Airport, Union Station).
+
+
+record_durations(uoft_place_id, ["formatted_centroids1.csv",
+                                 "formatted_centroids2.csv",
+                                 "formatted_centroids3.csv"], "formatted_durations_uoft.csv")
+record_durations(pearson_airport_place_id, ["formatted_centroids1.csv",
+                                            "formatted_centroids2.csv",
+                                            "formatted_centroids3.csv"], "formatted_durations_pearson.csv")
+record_durations(union_station_place_id, ["formatted_centroids1.csv",
+                                          "formatted_centroids2.csv",
+                                          "formatted_centroids3.csv"], "formatted_durations_union.csv")
+# Once the above command is complete and all data chunks have been processed, move on to map visualization.
 
 # TODO: recompile master_merged_location.csv files since some of them contain conflicting or misplaced data
 # TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
 #  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
-# TODO: add custom legend (NOT using geopandas or matplotlib) for informative use and overall completeness
-# TODO: schedule appointment with Professor Hall once all 6 maps and legend is ready, outline checklist is fully
-#  crossed out, email to Accounts Officer is prepared, and paperwork is filled out
+# TODO: update legend on PowerPoint presentation that Professor sent with hex values used on produced maps
+# TODO: Update outline checklist, record hours and submit timesheet for salary
 # TODO: add comments to directions.py inline with code to explain complex chunks
 # TODO: extract code in data_formatter.py and visualizer.py to form proper methods and functions with meaningful
 #  documentation and inline comments
