@@ -149,15 +149,18 @@ def record_durations(origin: str, input_files: list, output_file: str) -> None:
 # (UofT, Pearson Airport, Union Station).
 
 
-record_durations(uoft_place_id, ["formatted_centroids1.csv",
-                                 "formatted_centroids2.csv",
-                                 "formatted_centroids3.csv"], "formatted_durations_uoft.csv")
-record_durations(pearson_airport_place_id, ["formatted_centroids1.csv",
-                                            "formatted_centroids2.csv",
-                                            "formatted_centroids3.csv"], "formatted_durations_pearson.csv")
-record_durations(union_station_place_id, ["formatted_centroids1.csv",
-                                          "formatted_centroids2.csv",
-                                          "formatted_centroids3.csv"], "formatted_durations_union.csv")
+record_durations(uoft_place_id, ["Formatted Data/formatted_centroids1.csv",
+                                 "Formatted Data/formatted_centroids2.csv",
+                                 "Formatted Data/formatted_centroids3.csv"],
+                 "Formatted Data/formatted_durations_uoft.csv")
+record_durations(pearson_airport_place_id, ["Formatted Data/formatted_centroids1.csv",
+                                            "Formatted Data/formatted_centroids2.csv",
+                                            "Formatted Data/formatted_centroids3.csv"],
+                 "Formatted Data/formatted_durations_pearson.csv")
+record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.csv",
+                                          "Formatted Data/formatted_centroids2.csv",
+                                          "Formatted Data/formatted_centroids3.csv"],
+                 "Formatted Data/formatted_durations_union.csv")
 # Once the above command is complete and all data chunks have been processed, move on to map visualization.
 
 # TODO: recompile master_merged_location.csv files since some of them contain conflicting or misplaced data
