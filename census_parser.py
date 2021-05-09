@@ -13,7 +13,7 @@ def parse(input_file: str) -> None:
         # skip header
         next(data_in)
         reader = csv.reader(data_in)
-        with open('census_cleaned.csv', 'w', newline='') as data_out:
+        with open('Formatted Data/census_cleaned.csv', 'w', newline='') as data_out:
             writer = csv.writer(data_out)
             writer.writerow(
                 ['', 'CTUID', 'CTNAME', 'PRUID', 'PRNAME', 'CMAUID', 'CMAPUID', 'CMANAME', 'CMATYPE', 'geometry',
@@ -25,4 +25,4 @@ def parse(input_file: str) -> None:
 
 
 if __name__ == '__main__':
-    parse('toronto_census_tracts_coordinates.csv')
+    parse('Formatted Data/toronto_census_tracts_coordinates.csv')
