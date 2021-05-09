@@ -1,4 +1,3 @@
-import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import csv
@@ -54,7 +53,8 @@ def formatted_centroid_display(input_csv: str):
                 print(f'Census tract {row[0]} has centroid of coordinates {row[1]}')
 
 
-census_2016 = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/Geographical Data/lct_000b16a_e.shp"
+base_directory = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/"
+census_2016 = base_directory + "Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
 full_map = census_tracts.plot()
 census_tracts_toronto = filter_df(census_tracts, "CMANAME", "Toronto")
@@ -63,8 +63,8 @@ converted_map_toronto = convert_coordinates(census_tracts_toronto, 4326)
 map_toronto_4326 = converted_map_toronto.plot()
 plt.savefig('greater_toronto.png', dpi=800)
 converted_map_toronto.to_csv(
-    "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/toronto_census_tracts_coordinates.csv")
+    base_directory + "Formatted Data/toronto_census_tracts_coordinates.csv")
 centroids = converted_map_toronto.centroid
-centroids.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/toronto_centroids.csv")
-format_centroids("toronto_centroids.csv", "formatted_centroids.csv")
+centroids.to_csv(base_directory + "Formatted Data/toronto_centroids.csv")
+format_centroids("Formatted Data/toronto_centroids.csv", "Formatted Data/formatted_centroids.csv")
 
