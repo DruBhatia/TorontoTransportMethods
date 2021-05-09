@@ -61,7 +61,7 @@ census_tracts_toronto = filter_df(census_tracts, "CMANAME", "Toronto")
 map_toronto = census_tracts_toronto.plot()
 converted_map_toronto = convert_coordinates(census_tracts_toronto, 4326)
 map_toronto_4326 = converted_map_toronto.plot()
-plt.savefig('greater_toronto.png', dpi=800)
+plt.savefig('Maps/greater_toronto1.png', dpi=800)
 converted_map_toronto.to_csv(
     base_directory + "Formatted Data/toronto_census_tracts_coordinates.csv")
 centroids = converted_map_toronto.centroid
