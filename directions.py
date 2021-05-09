@@ -161,15 +161,14 @@ record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.c
                                           "Formatted Data/formatted_centroids2.csv",
                                           "Formatted Data/formatted_centroids3.csv"],
                  "Formatted Data/formatted_durations_union.csv")
-# Once the above command is complete and all data chunks have been processed, move on to map visualization.
 
-# TODO: recompile master_merged_location.csv files since some of them contain conflicting or misplaced data
+# Once the above 3 commands are complete and all data chunks have been processed, move on to map visualization,
+# done in visualizer.py
+
+# TODO: recompile master_merged_location.csv files since some of them may contain conflicting or misplaced data
 # TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
 #  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
-# TODO: update legend on PowerPoint presentation that Professor sent with hex values used on produced maps
 # TODO: Update outline checklist, record hours and submit timesheet for salary
-# TODO: add comments to directions.py inline with code to explain complex chunks
-# TODO: extract code in data_formatter.py and visualizer.py to form proper methods and functions with meaningful
-#  documentation and inline comments
+# TODO: update data_formatter.py, directions.py, and visualizer.py to have meaningful documentation and inline comments
 # TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
 #  contemporary map in future
