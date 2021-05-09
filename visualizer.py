@@ -72,5 +72,4 @@ ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
 for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
-    ax1.set_title("Quickest method around City of Toronto from Pearson Airport")
 fig.savefig("uoft_greater_coloured.png", dpi=1600)
