@@ -3,11 +3,12 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import csv
 
-census_2016 = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/Geographical Data/lct_000b16a_e.shp"
+base_directory = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/"
+census_2016 = "Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
 census_tracts_toronto = census_tracts.loc[census_tracts['CMANAME'] == 'Toronto']
 
-core_tracts = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/toronto_core_ctnames.csv"
+core_tracts = base_directory + "Formatted Data/toronto_core_ctnames.csv"
 with open(core_tracts) as csv_file:
     csv_reader = csv.reader(csv_file)
     line_counter = 0
@@ -40,22 +41,22 @@ core_tracts_toronto = census_tracts_toronto[census_tracts_toronto['CTNAME'].isin
 map_toronto = census_tracts_toronto.plot()
 converted_map_toronto = census_tracts_toronto.to_crs("EPSG:4326")
 map_toronto_4326 = converted_map_toronto.plot()
-plt.savefig('greater_toronto2.png', dpi=800)
+plt.savefig('Maps/greater_toronto2.png', dpi=800)
 plt.show()
 
 map_core_toronto = core_tracts_toronto.plot()
 converted_map_core_toronto = core_tracts_toronto.to_crs("EPSG:4326")
 map_core_toronto_4326 = converted_map_core_toronto.plot()
-plt.savefig("core_toronto.png", dpi=800)
+plt.savefig("Maps/core_toronto.png", dpi=800)
 plt.show()
 
-durations = pd.read_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/formatted_durations_uoft0.csv")
+durations = pd.read_csv(base_directory + "Formatted Data/formatted_durations_uoft.csv")
 print(durations.head())
 merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
 merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
-merged.to_csv("C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/master_merged_uoft1.csv")
+merged.to_csv( base_directory + "Formatted Data/master_merged_uoft.csv")
 
 keys = ["0", "1", "2", "3", "4"]
 colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
@@ -72,4 +73,4 @@ ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
 for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
-fig.savefig("uoft_greater_coloured.png", dpi=1600)
+fig.savefig("Maps/uoft_greater_coloured.png", dpi=1600)

@@ -179,8 +179,10 @@ def calculate_shares(input_file: str, output_file: str) -> None:
 # then read the 3 equally sized centroid subfiles one by one, perform the requests, and append all the request results
 # into the same output file which we just defined the header for.
 
-# The 3 commands below are separated to represent the requests made for each origin node:
-# (UofT, Pearson Airport, Union Station).
+# The 3 commands for record_durations() below are separated to represent the requests made for each origin node:
+# (UofT, Pearson Airport, Union Station). Each record_durations() command is followed by a calculate_shares()
+# command that calculates the share of census tracts which are fastest reached by each mode of transport from
+# the origin node that was just previously used for duration requests.
 
 
 record_durations(uoft_place_id, ["Formatted Data/formatted_centroids1.csv",
@@ -203,6 +205,6 @@ record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.c
 # TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
 #  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
 # TODO: Update outline checklist, record hours and submit timesheet for salary
-# TODO: update data_formatter.py, directions.py, and visualizer.py to have meaningful documentation and inline comments
+# TODO: update data_formatter.py, and visualizer.py to have meaningful documentation and inline comments
 # TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
 #  contemporary map in future
