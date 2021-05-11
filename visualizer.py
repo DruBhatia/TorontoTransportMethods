@@ -44,6 +44,8 @@ def calculate_shares(input_file: str, output_file: str) -> None:
             csv_writer.writerow(['BIKING', biking, round((biking/total)*100, 2)])
             csv_writer.writerow(['TRANSIT', transit, round((transit/total)*100, 2)])
             csv_writer.writerow(['DRIVING', driving, round((driving/total)*100, 2)])
+            csv_writer.writerow(['TOTAL', walking+biking+transit+driving,
+                                 round((walking+biking+transit+driving)/total, 2)])
 
 
 # Parse a list of census tract (CT) data to strip redundant data
