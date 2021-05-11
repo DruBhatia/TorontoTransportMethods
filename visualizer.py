@@ -12,6 +12,40 @@ census_tracts = gpd.read_file(census_2016)
 census_tracts_toronto = census_tracts.loc[census_tracts['CMANAME'] == 'Toronto']
 
 
+def calculate_shares(input_file: str, output_file: str) -> None:
+    """ Calculates the share of the city's total census tracts that are best reached by each mode of transport, using
+    data available in the input_file. Results are written in a basic table format to the output_file.
+    BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
+    with open(input_file) as csv_in:
+        csv_reader = csv.reader(csv_in)
+        line_count = 0
+        walking = 0
+        biking = 0
+        transit = 0
+        driving = 0
+        total = 0
+        with open(output_file, 'w', newline='') as csv_out:
+            csv_writer = csv.writer(csv_out)
+            for row in csv_reader:
+                if line_count == 0:
+                    line_count += 1
+                else:
+                    if row[9] == "0":
+                        walking += 1
+                    elif row[9] == "1":
+                        biking += 1
+                    elif row[9] == "2":
+                        transit += 1
+                    elif row[9] == "3":
+                        driving += 1
+                    total += 1
+            csv_writer.writerow(['MODE', 'TRACTS', 'SHARE'])
+            csv_writer.writerow(['WALKING', walking, round((walking/total)*100, 2)])
+            csv_writer.writerow(['BIKING', biking, round((biking/total)*100, 2)])
+            csv_writer.writerow(['TRANSIT', transit, round((transit/total)*100, 2)])
+            csv_writer.writerow(['DRIVING', driving, round((driving/total)*100, 2)])
+
+
 # Parse a list of census tract (CT) data to strip redundant data
 # Produces a formatted list of CT names that form the core City of Toronto and stores list
 # in local scope for convenient manipulation and visualization later
@@ -72,25 +106,28 @@ merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACT
 merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
-merged.to_csv(base_directory + "Formatted Data/master_merged_uoft.csv")
+merged.to_csv(base_directory + "Formatted Data/master_merged_core_uoft.csv")
 
-# Assert and package hex colour values for each mode of transport
-keys = ["0", "1", "2", "3", "4"]
-colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
-colour_dict = dict(zip(keys, colours))
+# # Assert and package hex colour values for each mode of transport
+# keys = ["0", "1", "2", "3", "4"]
+# colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
+# colour_dict = dict(zip(keys, colours))
+#
+# # Generate canvas framework for coloured map to be placed on in following section
+# row_count = 4
+# ax_list = []
+# for i in range(row_count+1):
+#     ax_list.append('ax' + str(i+1))
+#     ax_string = ', '.join(ax_list)
+# fig, (ax_string) = plt.subplots(row_count, 4)
+# ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
+#
+# # Iterate over map template(s) produced earlier and colour each CT as per quickest transport method,
+# # then plot map on subplot canvas produced in previous section and save plotted map as figure (.png)
+# for index, row in merged.iterrows():
+#     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
+#     ax1.axis("off")
+# fig.savefig("Maps/uoft_core_coloured.png", dpi=1600)
 
-# Generate canvas framework for coloured map to be placed on in following section
-row_count = 4
-ax_list = []
-for i in range(row_count+1):
-    ax_list.append('ax' + str(i+1))
-    ax_string = ', '.join(ax_list)
-fig, (ax_string) = plt.subplots(row_count, 4)
-ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
-
-# Iterate over map template(s) produced earlier and colour each CT as per quickest transport method,
-# then plot map on subplot canvas produced in previous section and save plotted map as figure (.png)
-for index, row in merged.iterrows():
-    plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
-    ax1.axis("off")
-fig.savefig("Maps/uoft_core_coloured.png", dpi=1600)
+# Calculate percentage shares for each method of transport and save in .csv format
+calculate_shares("Formatted Data/master_merged_core_uoft.csv", "Formatted Data/transport_shares_core_uoft.csv")

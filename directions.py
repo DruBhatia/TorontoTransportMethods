@@ -144,40 +144,6 @@ def record_durations(origin: str, input_files: list, output_file: str) -> None:
     print("Durations formatted and recorded.")
 
 
-def calculate_shares(input_file: str, output_file: str) -> None:
-    """ Calculates the share of the city's total census tracts that are best reached by each mode of transport, using
-    data available in the input_file. Results are written in a basic table format to the output_file.
-    BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
-    with open(input_file) as csv_in:
-        csv_reader = csv.reader(csv_in)
-        line_count = 0
-        walking = 0
-        biking = 0
-        transit = 0
-        driving = 0
-        total = 0
-        with open(output_file, 'w', newline='') as csv_out:
-            csv_writer = csv.writer(csv_out)
-            for row in csv_reader:
-                if line_count == 0:
-                    line_count += 1
-                else:
-                    if row[7] == "0":
-                        walking += 1
-                    elif row[7] == "1":
-                        biking += 1
-                    elif row[7] == "2":
-                        transit += 1
-                    elif row[7] == "3":
-                        driving += 1
-                    total += 1
-            csv_writer.writerow(['MODE', 'TRACTS', 'SHARE'])
-            csv_writer.writerow(['WALKING', walking, (walking/total)*100])
-            csv_writer.writerow(['BIKING', biking, (biking/total)*100])
-            csv_writer.writerow(['TRANSIT', transit, (transit/total)*100])
-            csv_writer.writerow(['DRIVING', driving, (driving/total)*100])
-
-
 # What recording of requests should look like: define the header for the formatted_durations_location.csv output file,
 # then read the 3 equally sized centroid subfiles one by one, perform the requests, and append all the request results
 # into the same output file which we just defined the header for.
@@ -205,8 +171,6 @@ record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.c
 # which is managed in visualizer.py
 
 # TODO: recompile master_merged_location.csv files since some of them may contain conflicting or misplaced data
-# TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
-#  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
 # TODO: Update outline checklist, record hours and submit timesheet for salary
 # TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
 #  contemporary map in future
