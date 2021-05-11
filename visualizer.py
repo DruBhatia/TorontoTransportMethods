@@ -66,7 +66,9 @@ plt.show()
 # Merge CT names with route data pulled from Google Maps API in directions.py
 durations = pd.read_csv(base_directory + "Formatted Data/formatted_durations_uoft.csv")
 print(durations.head())
-merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
+# By default, route data is merged with the map of the core City of Toronto. To produce a map of the GTA, replace
+# "converted_map_core_toronto" in the following line with "converted_map_toronto"
+merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
 merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
@@ -91,4 +93,4 @@ ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
 for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
-fig.savefig("Maps/uoft_greater_coloured.png", dpi=1600)
+fig.savefig("Maps/uoft_core_coloured.png", dpi=1600)
