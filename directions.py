@@ -1,13 +1,16 @@
 import requests
 import csv
 
+# IMPORTANT:
+# Declare API key, placeIDs of origin nodes, and base URL of HTTP requests to use with Google Maps API
+# Make sure the values in this section are up-to-date and accurate to avoid wasted/redundant/unauthorized API calls
 uoft_place_id = "ChIJm_0x87g0K4gR93ZadrabHY0"
 union_station_place_id = "ChIJKQDzOA41K4gRajQDdyzD990"
 pearson_airport_place_id = "ChIJkdQtwEo5K4gRxQ4DxOldHbQ"
 api_key = "AIzaSyA06s0IARgjGwG2kv6KpRjlQGyrBOdUgCM"
 base_url = "https://maps.googleapis.com/maps/api/directions/json?"
 
-
+# Testing with sample coordinates and routes
 # test_longitude = "-79.4272866628539"
 # test_latitude = "43.8781931250116"
 # test_latlong = test_latitude + "," + test_longitude
@@ -199,12 +202,11 @@ record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.c
                  "Formatted Data/formatted_durations_unionst.csv")
 
 # Once the above 3 commands are complete and all data chunks have been processed, move on to map visualization,
-# done in visualizer.py
+# which is managed in visualizer.py
 
 # TODO: recompile master_merged_location.csv files since some of them may contain conflicting or misplaced data
 # TODO: add method(s) to count and calculate what percentage of the city's census tracts (core and greater) are reached
 #  fastest by which mode of transport (e.g. 70% is reached fastest by driving, 20% reached fastest by biking, etc.
 # TODO: Update outline checklist, record hours and submit timesheet for salary
-# TODO: update data_formatter.py, and visualizer.py to have meaningful documentation and inline comments
 # TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
 #  contemporary map in future

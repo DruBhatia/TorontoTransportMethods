@@ -53,12 +53,20 @@ def formatted_centroid_display(input_csv: str):
                 print(f'Census tract {row[0]} has centroid of coordinates {row[1]}')
 
 
+# IMPORTANT:
+# Declare working directory and files/lists to be used as frameworks for later visualization
+# Make sure the directories in this section are updated and correspond to the file structure on your device
 base_directory = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/"
 census_2016 = base_directory + "Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
+
+# Plot full map of the Census locations, filtering down to Greater Toronto Area (GTA)
 full_map = census_tracts.plot()
 census_tracts_toronto = filter_df(census_tracts, "CMANAME", "Toronto")
 map_toronto = census_tracts_toronto.plot()
+
+# Convert coordinate system from North American Conventional Datum to EPSG 4326 (global standard for satellite
+# navigation, such as with Google Maps), and plot+save corresponding map of GTA in both figure (.png) and .csv formats
 converted_map_toronto = convert_coordinates(census_tracts_toronto, 4326)
 map_toronto_4326 = converted_map_toronto.plot()
 plt.savefig('Maps/greater_toronto1.png', dpi=800)
