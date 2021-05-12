@@ -170,7 +170,6 @@ record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.c
 # Once the above 3 commands are complete and all data chunks have been processed, move on to map visualization,
 # which is managed in visualizer.py
 
-# TODO: recompile master_merged_location.csv files since some of them may contain conflicting or misplaced data
-# TODO: Update outline checklist, record hours and submit timesheet for salary
+# TODO: recompile master_merged_location.csv files to ensure changes made since last session are functional
 # TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
 #  contemporary map in future
