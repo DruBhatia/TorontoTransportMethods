@@ -110,26 +110,26 @@ print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
 merged.to_csv(base_directory + "Formatted Data/master_merged_core_uoft.csv")
 
-# # Assert and package hex colour values for each mode of transport
-# keys = ["0", "1", "2", "3", "4"]
-# colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
-# colour_dict = dict(zip(keys, colours))
-#
-# # Generate canvas framework for coloured map to be placed on in following section
-# row_count = 4
-# ax_list = []
-# for i in range(row_count+1):
-#     ax_list.append('ax' + str(i+1))
-#     ax_string = ', '.join(ax_list)
-# fig, (ax_string) = plt.subplots(row_count, 4)
-# ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
-#
-# # Iterate over map template(s) produced earlier and colour each CT as per quickest transport method,
-# # then plot map on subplot canvas produced in previous section and save plotted map as figure (.png)
-# for index, row in merged.iterrows():
-#     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
-#     ax1.axis("off")
-# fig.savefig("Maps/uoft_core_coloured.png", dpi=1600)
+# Assert and package hex colour values for each mode of transport
+keys = ["0", "1", "2", "3", "4"]
+colours = ["#65c81e", "#f5c73c", "#4384c4", "#d04f46", "xkcd:grey"]
+colour_dict = dict(zip(keys, colours))
+
+# Generate canvas framework for coloured map to be placed on in following section
+row_count = 4
+ax_list = []
+for i in range(row_count+1):
+    ax_list.append('ax' + str(i+1))
+    ax_string = ', '.join(ax_list)
+fig, (ax_string) = plt.subplots(row_count, 4)
+ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
+
+# Iterate over map template(s) produced earlier and colour each CT as per quickest transport method,
+# then plot map on subplot canvas produced in previous section and save plotted map as figure (.png)
+for index, row in merged.iterrows():
+    plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
+    ax1.axis("off")
+fig.savefig(base_directory + "Maps/uoft_core_coloured.png", dpi=1600)
 
 # Calculate percentage shares for each method of transport and save in .csv format
 calculate_shares("Formatted Data/master_merged_core_uoft.csv", "Formatted Data/transport_shares_core_uoft.csv")
