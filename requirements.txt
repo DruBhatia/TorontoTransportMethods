@@ -1,0 +1,52 @@
+attrs @ file:///tmp/build/80754af9/attrs_1604765588209/work
+brotlipy==0.7.0
+certifi==2020.12.5
+cffi @ file:///C:/ci/cffi_1606255208697/work
+chardet @ file:///C:/ci/chardet_1607690654534/work
+click==7.1.2
+click-plugins==1.1.1
+cligj==0.7.1
+cryptography @ file:///C:/ci/cryptography_1607637849569/work
+cycler==0.10.0
+Deprecated==1.2.10
+descartes==1.1.0
+Fiona==1.8.13.post1
+GDAL==3.0.2
+geopandas @ file:///tmp/build/80754af9/geopandas_1594937497867/work
+googlemaps==2.5.1
+idna @ file:///tmp/build/80754af9/idna_1593446292537/work
+joblib @ file:///tmp/build/80754af9/joblib_1607970656719/work
+kiwisolver @ file:///C:/ci/kiwisolver_1604014703538/work
+matplotlib @ file:///C:/ci/matplotlib-base_1603355780617/work
+mkl-fft==1.2.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+munch==2.5.0
+numpy @ file:///C:/ci/numpy_and_numpy_base_1603466732592/work
+olefile==0.46
+palettable==3.3.0
+pandas @ file:///C:/ci/pandas_1608068219821/work
+Pillow @ file:///C:/ci/pillow_1603823068645/work
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1608057966937/work
+pyparsing==2.4.7
+pyproj==2.6.1.post1
+pysal==2.1.0
+PySocks @ file:///C:/ci/pysocks_1605287845585/work
+python-dateutil==2.8.1
+pytz @ file:///tmp/build/80754af9/pytz_1606604771399/work
+requests @ file:///tmp/build/80754af9/requests_1608241421344/work
+Rtree==0.9.4
+scikit-learn @ file:///C:/ci/scikit-learn_1598377018496/work
+scipy @ file:///C:/ci/scipy_1604596260408/work
+seaborn @ file:///tmp/build/80754af9/seaborn_1608578541026/work
+Shapely==1.7.1
+sip==4.19.13
+six @ file:///C:/ci/six_1605187374963/work
+threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
+tornado @ file:///C:/ci/tornado_1606942392901/work
+tqdm @ file:///tmp/build/80754af9/tqdm_1607369919789/work
+urllib3 @ file:///tmp/build/80754af9/urllib3_1606938623459/work
+win-inet-pton @ file:///C:/ci/win_inet_pton_1605306167264/work
+wincertstore==0.2
+wrapt==1.12.1
