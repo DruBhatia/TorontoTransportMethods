@@ -7,7 +7,7 @@ import csv
 uoft_place_id = "ChIJm_0x87g0K4gR93ZadrabHY0"
 union_station_place_id = "ChIJKQDzOA41K4gRajQDdyzD990"
 pearson_airport_place_id = "ChIJkdQtwEo5K4gRxQ4DxOldHbQ"
-api_key = "AIzaSyA06s0IARgjGwG2kv6KpRjlQGyrBOdUgCM"
+api_key = "AIzaSyBVlWPr9B5miN-Hn0mZpcM413T0wOxdVTM"
 base_url = "https://maps.googleapis.com/maps/api/directions/json?"
 
 
