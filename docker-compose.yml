@@ -1,0 +1,8 @@
+services:
+  app:
+    container_name: toronto-transport-methods
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./out:/out
