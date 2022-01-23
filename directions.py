@@ -10,6 +10,7 @@ pearson_airport_place_id = "ChIJkdQtwEo5K4gRxQ4DxOldHbQ"
 api_key = "AIzaSyA06s0IARgjGwG2kv6KpRjlQGyrBOdUgCM"
 base_url = "https://maps.googleapis.com/maps/api/directions/json?"
 
+
 # Testing with sample coordinates and routes
 # test_longitude = "-79.4272866628539"
 # test_latitude = "43.8781931250116"
@@ -139,8 +140,9 @@ def record_durations(origin: str, input_files: list, output_file: str) -> None:
      into the output_file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
     define_durations_header(output_file)
     for input_file in input_files:
+        print(f'Starting to process "{input_file}"')
         request_durations(origin, input_file, output_file)
-        print("Data chunk processed...")
+        print(f'Data chunk processed... "{input_file}"')
     print("Durations formatted and recorded.")
 
 
