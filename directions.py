@@ -38,57 +38,49 @@ def get_shortest_duration(json_output) -> int:
     """ Get the duration of the shortest route from json_output. """
     durations = [get_duration(route) for route in json_output["routes"] if get_duration(route) >= 0]
     if not durations:
-        print('Error!!')
+        print('Error: no routes with duration more than 0')
         print(json_output)
     return min(durations)
+
+
+def _api_helper(mode: str, origin: str, destination: str) -> int:
+    """
+    Helper for api calls.
+    """
+    api_call_url = base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key
+    request = requests.get(api_call_url)
+    json_output = request.json()
+    if json_output["status"] == "ZERO_RESULTS":
+        return 200000
+    elif 'error message' in json_output:
+        print(api_call_url)
+        print(json_output)
+    else:
+        return get_shortest_duration(json_output)
 
 
 def get_walking(origin: str, destination: str) -> int:
     """ Get duration of shortest walking route between origin and destination (if it exists). """
     mode = "walking"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output)
+    return _api_helper(mode, origin, destination)
 
 
 def get_biking(origin: str, destination: str) -> int:
     """ Get duration of shortest bicycling route between origin and destination (if it exists). """
     mode = "bicycling"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output) + 90
+    return _api_helper(mode, origin, destination) + 90
 
 
 def get_transit(origin: str, destination: str) -> int:
     """ Get duration of shortest transit route between origin and destination (if it exists). """
     mode = "transit"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output)
+    return _api_helper(mode, origin, destination)
 
 
 def get_driving(origin: str, destination: str) -> int:
     """ Get duration of shortest driving route between origin and destination (if it exists). """
     mode = "driving"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output) + 720
+    return _api_helper(mode, origin, destination) + 720
 
 
 def all_transport_modes(origin: str, destination: str) -> list:
