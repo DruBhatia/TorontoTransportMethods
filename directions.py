@@ -36,8 +36,11 @@ def get_duration(route) -> int:
 
 def get_shortest_duration(json_output) -> int:
     """ Get the duration of the shortest route from json_output. """
-    duration = min(get_duration(route) for route in json_output["routes"] if get_duration(route) >= 0)
-    return duration
+    durations = [get_duration(route) for route in json_output["routes"] if get_duration(route) >= 0]
+    if not durations:
+        print('Error!!')
+        print(json_output)
+    return min(durations)
 
 
 def get_walking(origin: str, destination: str) -> int:
