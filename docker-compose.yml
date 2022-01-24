@@ -6,3 +6,4 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./Maps:/Maps
+      - ./Formatted Data:/Formatted Data
