@@ -6,7 +6,7 @@ import csv
 # IMPORTANT:
 # Declare working directory and files/lists to be used as frameworks for later visualization
 # Make sure the directories in this section are updated and correspond to the file structure on your device
-base_directory = "C:/Users/dhruo/Documents/Projects/TorontoTransportMethods/"
+base_directory = "/"
 census_2016 = "Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
 census_tracts_toronto = census_tracts.loc[census_tracts['CMANAME'] == 'Toronto']

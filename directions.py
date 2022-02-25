@@ -7,8 +7,9 @@ import csv
 uoft_place_id = "ChIJm_0x87g0K4gR93ZadrabHY0"
 union_station_place_id = "ChIJKQDzOA41K4gRajQDdyzD990"
 pearson_airport_place_id = "ChIJkdQtwEo5K4gRxQ4DxOldHbQ"
-api_key = "AIzaSyA06s0IARgjGwG2kv6KpRjlQGyrBOdUgCM"
+api_key = "AIzaSyBVlWPr9B5miN-Hn0mZpcM413T0wOxdVTM"
 base_url = "https://maps.googleapis.com/maps/api/directions/json?"
+
 
 # Testing with sample coordinates and routes
 # test_longitude = "-79.4272866628539"
@@ -35,56 +36,51 @@ def get_duration(route) -> int:
 
 def get_shortest_duration(json_output) -> int:
     """ Get the duration of the shortest route from json_output. """
-    duration = min(get_duration(route) for route in json_output["routes"] if get_duration(route) >= 0)
-    return duration
+    durations = [get_duration(route) for route in json_output["routes"] if get_duration(route) >= 0]
+    if not durations:
+        print('Error: no routes with duration more than 0')
+        print(json_output)
+    return min(durations)
+
+
+def _api_helper(mode: str, origin: str, destination: str) -> int:
+    """
+    Helper for api calls.
+    """
+    api_call_url = base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key
+    request = requests.get(api_call_url)
+    json_output = request.json()
+    if json_output["status"] == "ZERO_RESULTS":
+        return 200000
+    elif 'error message' in json_output:
+        print(api_call_url)
+        print(json_output)
+    else:
+        return get_shortest_duration(json_output)
 
 
 def get_walking(origin: str, destination: str) -> int:
     """ Get duration of shortest walking route between origin and destination (if it exists). """
     mode = "walking"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output)
+    return _api_helper(mode, origin, destination)
 
 
 def get_biking(origin: str, destination: str) -> int:
     """ Get duration of shortest bicycling route between origin and destination (if it exists). """
     mode = "bicycling"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output) + 90
+    return _api_helper(mode, origin, destination) + 90
 
 
 def get_transit(origin: str, destination: str) -> int:
     """ Get duration of shortest transit route between origin and destination (if it exists). """
     mode = "transit"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output)
+    return _api_helper(mode, origin, destination)
 
 
 def get_driving(origin: str, destination: str) -> int:
     """ Get duration of shortest driving route between origin and destination (if it exists). """
     mode = "driving"
-    request = requests.get(
-        base_url + "origin=place_id:" + origin + "&destination=" + destination + "&mode=" + mode + "&key=" + api_key)
-    json_output = request.json()
-    if json_output["status"] == "ZERO_RESULTS":
-        return 200000
-    else:
-        return get_shortest_duration(json_output) + 720
+    return _api_helper(mode, origin, destination) + 720
 
 
 def all_transport_modes(origin: str, destination: str) -> list:
@@ -139,8 +135,9 @@ def record_durations(origin: str, input_files: list, output_file: str) -> None:
      into the output_file. BOTH input_file AND output_file MUST BE EXISTING .CSV FILES. """
     define_durations_header(output_file)
     for input_file in input_files:
+        print(f'Starting to process "{input_file}"')
         request_durations(origin, input_file, output_file)
-        print("Data chunk processed...")
+        print(f'Data chunk processed... "{input_file}"')
     print("Durations formatted and recorded.")
 
 

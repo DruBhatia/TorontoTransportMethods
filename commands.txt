@@ -1,0 +1,4 @@
+docker-compose up --build -d
+docker-compose down -v
+docker exec toronto-transport-methods python3 visualizer.py
+docker exec -it toronto-transport-methods bash
