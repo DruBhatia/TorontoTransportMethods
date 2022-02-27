@@ -7,3 +7,4 @@ services:
     volumes:
       - ./Maps:/Maps
       - ./Formatted Data:/Formatted Data
+      - ./visualizer.py:/visualizer.py
