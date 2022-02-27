@@ -10,6 +10,8 @@ base_directory = "/"
 census_2016 = "Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
 census_tracts_toronto = census_tracts.loc[census_tracts['CMANAME'] == 'Toronto']
+map_size = "core"
+origin = "uoft"
 
 
 def calculate_shares(input_file: str, output_file: str) -> None:
@@ -100,15 +102,18 @@ plt.savefig("Maps/core_toronto.png", dpi=800)
 plt.show()
 
 # Merge CT names with route data pulled from Google Maps API in directions.py
-durations = pd.read_csv(base_directory + "Formatted Data/formatted_durations_uoft.csv")
+durations = pd.read_csv(base_directory + "Formatted Data/formatted_durations_" + origin + ".csv")
 print(durations.head())
 # By default, route data is merged with the map of the core City of Toronto. To produce a map of the GTA, replace
-# "converted_map_core_toronto" in the following line with "converted_map_toronto"
-merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
+# the value of map_size in line 13 with "greater" instead of "core"
+if map_size == "greater":
+    merged = converted_map_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
+else:
+    merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
 merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
 print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
-merged.to_csv(base_directory + "Formatted Data/master_merged_core_uoft.csv")
+merged.to_csv(base_directory + "Formatted Data/master_merged_" + map_size + "_" + origin + ".csv")
 
 # Assert and package hex colour values for each mode of transport
 keys = ["0", "1", "2", "3", "4"]
@@ -129,7 +134,8 @@ ax1 = plt.subplot2grid((row_count, 4), (0, 0), rowspan=row_count, colspan=4)
 for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
-fig.savefig(base_directory + "Maps/uoft_core_coloured.png", dpi=1600)
+fig.savefig(base_directory + "Maps/" + origin + "_" + map_size + "_coloured.png", dpi=1600)
 
 # Calculate percentage shares for each method of transport and save in .csv format
-calculate_shares("Formatted Data/master_merged_core_uoft.csv", "Formatted Data/transport_shares_core_uoft.csv")
+calculate_shares("Formatted Data/master_merged_" + map_size + "_" + origin + ".csv", "Formatted Data/transport_shares_"
+                 + map_size + "_" + origin + ".csv")

@@ -7,7 +7,7 @@ import csv
 uoft_place_id = "ChIJm_0x87g0K4gR93ZadrabHY0"
 union_station_place_id = "ChIJKQDzOA41K4gRajQDdyzD990"
 pearson_airport_place_id = "ChIJkdQtwEo5K4gRxQ4DxOldHbQ"
-api_key = "AIzaSyBVlWPr9B5miN-Hn0mZpcM413T0wOxdVTM"
+api_key = "[Your API Key Here]"
 base_url = "https://maps.googleapis.com/maps/api/directions/json?"
 
 
@@ -155,18 +155,14 @@ record_durations(uoft_place_id, ["Formatted Data/formatted_centroids1.csv",
                                  "Formatted Data/formatted_centroids2.csv",
                                  "Formatted Data/formatted_centroids3.csv"],
                  "Formatted Data/formatted_durations_uoft.csv")
-record_durations(pearson_airport_place_id, ["Formatted Data/formatted_centroids1.csv",
-                                            "Formatted Data/formatted_centroids2.csv",
-                                            "Formatted Data/formatted_centroids3.csv"],
-                 "Formatted Data/formatted_durations_pearson.csv")
-record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.csv",
-                                          "Formatted Data/formatted_centroids2.csv",
-                                          "Formatted Data/formatted_centroids3.csv"],
-                 "Formatted Data/formatted_durations_unionst.csv")
+# record_durations(pearson_airport_place_id, ["Formatted Data/formatted_centroids1.csv",
+#                                             "Formatted Data/formatted_centroids2.csv",
+#                                             "Formatted Data/formatted_centroids3.csv"],
+#                  "Formatted Data/formatted_durations_pearson.csv")
+# record_durations(union_station_place_id, ["Formatted Data/formatted_centroids1.csv",
+#                                           "Formatted Data/formatted_centroids2.csv",
+#                                           "Formatted Data/formatted_centroids3.csv"],
+#                  "Formatted Data/formatted_durations_unionst.csv")
 
 # Once the above 3 commands are complete and all data chunks have been processed, move on to map visualization,
 # which is managed in visualizer.py
-
-# TODO: recompile master_merged_location.csv files to ensure changes made since last session are functional
-# TODO: add README on GitHub and prepare instructions for reproducibility in case anyone wants to generate an updated,
-#  contemporary map in future
