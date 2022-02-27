@@ -78,10 +78,10 @@ with open(core_tracts) as csv_file:
 core_tracts_list = list(dict.fromkeys(core_tracts_list))
 
 # Visual checks to ensure parsing was successful. This section can be commented out safely if deemed unnecessary.
-print(len(core_tracts_list))
-print(core_tracts_list)
-print(census_tracts_toronto['CTNAME'])
-print(census_tracts['CTNAME'])
+# print(len(core_tracts_list))
+# print(core_tracts_list)
+# print(census_tracts_toronto['CTNAME'])
+# print(census_tracts['CTNAME'])
 
 # Save an updated, non-redundant list of CTs that form the core City of Toronto
 core_tracts_toronto = census_tracts_toronto[census_tracts_toronto['CTNAME'].isin(core_tracts_list)]
@@ -103,7 +103,7 @@ plt.show()
 
 # Merge CT names with route data pulled from Google Maps API in directions.py
 durations = pd.read_csv(base_directory + "Formatted Data/formatted_durations_" + origin + ".csv")
-print(durations.head())
+# print(durations.head())
 # By default, route data is merged with the map of the core City of Toronto. To produce a map of the GTA, replace
 # the value of map_size in line 13 with "greater" instead of "core"
 if map_size == "greater":
@@ -111,7 +111,7 @@ if map_size == "greater":
 else:
     merged = converted_map_core_toronto.merge(durations, how="left", right_on="TRACTID", left_index=True)
 merged = merged[["TRACTID", "geometry", "LATITUDE",  "LONGITUDE", "WALK", "BIKE", "TRANSIT", "DRIVE", "SHORTEST"]]
-print(merged.head())
+# print(merged.head())
 merged["SHORTEST"].fillna(value="4", inplace=True)
 merged.to_csv(base_directory + "Formatted Data/master_merged_" + map_size + "_" + origin + ".csv")
 
@@ -135,7 +135,9 @@ for index, row in merged.iterrows():
     plot = merged[merged["TRACTID"] == row['TRACTID']].plot(color=colour_dict[str(int(row['SHORTEST']))], ax=ax1)
     ax1.axis("off")
 fig.savefig(base_directory + "Maps/" + origin + "_" + map_size + "_coloured.png", dpi=1600)
+print("Map plotted, saved in Maps/" + origin + "_" + map_size + "_coloured.png")
 
 # Calculate percentage shares for each method of transport and save in .csv format
 calculate_shares("Formatted Data/master_merged_" + map_size + "_" + origin + ".csv", "Formatted Data/transport_shares_"
                  + map_size + "_" + origin + ".csv")
+print("Transport shares calculated, written to Formatted Data/transport_shares_" + map_size + "_" + origin + ".csv")
