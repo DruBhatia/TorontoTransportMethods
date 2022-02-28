@@ -10,8 +10,8 @@ base_directory = "/"
 census_2016 = "Geographical Data/lct_000b16a_e.shp"
 census_tracts = gpd.read_file(census_2016)
 census_tracts_toronto = census_tracts.loc[census_tracts['CMANAME'] == 'Toronto']
-map_size = "core"
-origin = "uoft"
+map_size = "core"  # change to "core" for map of city of Toronto proper, "greater" for map of Greater Toronto Area
+origin = "uoft"  # change to "uoft" for UofT as origin, "unionst" for Union Station, or "pearson" for Pearson Airport
 
 
 def calculate_shares(input_file: str, output_file: str) -> None:
