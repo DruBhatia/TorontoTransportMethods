@@ -22,9 +22,9 @@ Origin node UofT:
 ![uoft_greater_coloured](https://github.com/user-attachments/assets/3900ec5a-f629-479a-88e6-bb70ad4a9977)
 
 Origin node Union Station:
-![union_greater_coloured](https://github.com/user-attachments/assets/d11ff39e-acad-4614-a56a-58fb6b80bf9b)
 ![union_core_coloured](https://github.com/user-attachments/assets/db8c8c8b-3f13-469f-b09e-6a4d1d555b4a)
+![union_greater_coloured](https://github.com/user-attachments/assets/d11ff39e-acad-4614-a56a-58fb6b80bf9b)
 
 Origin node Pearson Airport:
-![pearson_greater_coloured](https://github.com/user-attachments/assets/0223595c-a3d1-4a8f-8f29-96fd72542c07)
 ![pearson_core_coloured](https://github.com/user-attachments/assets/115701b7-9bd4-4922-bdd4-8e04952677cb)
+![pearson_greater_coloured](https://github.com/user-attachments/assets/0223595c-a3d1-4a8f-8f29-96fd72542c07)
