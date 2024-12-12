@@ -7,9 +7,13 @@ using the <geopandas> and <matplotlib> Python libraries in the Anaconda environm
 
 Here are a few sample maps showing the fastest transport method from 3 origin nodes - UofT, Union Station, and Pearson Airport.
 Sector colours represent the fastest method to reach the sector from the selected origin node. 
+
 Green sectors correspond to walking;
+
 Yellow sectors correspond to biking;
+
 Blue sectors correspong to public transit;
+
 Red sectors correspond to driving by car.
 
 ![uoft_core_coloured](https://github.com/user-attachments/assets/94b053b2-eddf-4325-b2aa-3edf00004062)
