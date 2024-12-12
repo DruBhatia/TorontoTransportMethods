@@ -6,15 +6,16 @@ Data for travel times was obtained using Google Maps API. Census data was cleane
 using the <geopandas> and <matplotlib> Python libraries in the Anaconda environment.
 
 Here are a few sample maps showing the fastest transport method from 3 origin nodes - UofT, Union Station, and Pearson Airport.
-Sector colours represent the fastest method to reach the sector from the selected origin node. 
 
-Green sectors correspond to walking;
+Legend: Sector colours represent the fastest method to reach the sector from the selected origin node. 
 
-Yellow sectors correspond to biking;
+Green sectors correspond to walking
 
-Blue sectors correspong to public transit;
+Yellow sectors correspond to biking
 
-Red sectors correspond to driving by car.
+Blue sectors correspong to public transit
+
+Red sectors correspond to driving by car
 
 ![uoft_core_coloured](https://github.com/user-attachments/assets/94b053b2-eddf-4325-b2aa-3edf00004062)
 ![union_greater_coloured](https://github.com/user-attachments/assets/d11ff39e-acad-4614-a56a-58fb6b80bf9b)
