@@ -17,9 +17,14 @@ Blue sectors correspong to public transit.
 
 Red sectors correspond to driving by car.
 
+Origin node UofT:
 ![uoft_core_coloured](https://github.com/user-attachments/assets/94b053b2-eddf-4325-b2aa-3edf00004062)
+![uoft_greater_coloured](https://github.com/user-attachments/assets/3900ec5a-f629-479a-88e6-bb70ad4a9977)
+
+Origin node Union Station:
 ![union_greater_coloured](https://github.com/user-attachments/assets/d11ff39e-acad-4614-a56a-58fb6b80bf9b)
 ![union_core_coloured](https://github.com/user-attachments/assets/db8c8c8b-3f13-469f-b09e-6a4d1d555b4a)
+
+Origin node Pearson Airport:
 ![pearson_greater_coloured](https://github.com/user-attachments/assets/0223595c-a3d1-4a8f-8f29-96fd72542c07)
 ![pearson_core_coloured](https://github.com/user-attachments/assets/115701b7-9bd4-4922-bdd4-8e04952677cb)
-![uoft_greater_coloured](https://github.com/user-attachments/assets/3900ec5a-f629-479a-88e6-bb70ad4a9977)
