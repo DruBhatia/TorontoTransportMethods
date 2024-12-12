@@ -3,7 +3,7 @@ the fastest transport methods (walking, biking, transit, driving) to traverse th
 node.
 
 Data for travel times was obtained using Google Maps API. Census data was cleaned and formatted into plots
-using the <geopandas> and <matplotlib> Python libraries in the Anaconda environment.
+using the geopandas and matplotlib Python libraries in the Anaconda environment.
 
 Here are a few sample maps showing the fastest transport method from 3 origin nodes - UofT, Union Station, and Pearson Airport.
 
